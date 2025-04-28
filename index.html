@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cek Progress Pesananmu Disini!</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 5px;
+    }
+    small {
+      color: #777;
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 12px;
+      width: 250px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #loading {
+      margin-top: 20px;
+      display: none;
+      color: #555;
+    }
+    #hasil {
+      margin-top: 25px;
+      font-size: 18px;
+      color: #444;
+      text-align: center;
+      max-width: 400px;
+      word-wrap: break-word;
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cek Progress Pesananmu Disini!</h1>
+  <small>Cek WA Admin untuk ID Pesananmu</small>
+
+  <input type="text" id="idPesanan" placeholder="Masukkan ID Pesanan">
+  <button onclick="cekStatus()">Cek Status</button>
+
+  <div id="loading">🔎 Sedang mencari...</div>
+  <div id="hasil"></div>
+
+  <script>
+    function cekStatus() {
+      var id = document.getElementById('idPesanan').value.trim();
+      var hasilDiv = document.getElementById('hasil');
+      var loadingDiv = document.getElementById('loading');
+
+      hasilDiv.innerHTML = "";
+      loadingDiv.style.display = "block";
+
+      if (id === "") {
+        loadingDiv.style.display = "none";
+        hasilDiv.innerHTML = "<p style='color:red;'>Masukkan ID Pesanan dulu!</p>";
+        return;
+      }
+
+      var url = "https://script.google.com/macros/s/AKfycxxx.../exec?id=" + id; // <-- Ganti URL Web App di sini
+
+      fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        loadingDiv.style.display = "none";
+        if (data.status === "ID tidak ditemukan") {
+          hasilDiv.innerHTML = "<p style='color:red;'>ID Pesanan tidak ditemukan. Cek kembali ID Anda.</p>";
+        } else {
+          hasilDiv.innerHTML = `
+            <div class="fade-in">
+              <p><strong>Nama:</strong> ${data.nama}</p>
+              <p><strong>Produk:</strong> ${data.produk}</p>
+              <p><strong>Status:</strong> ${data.status}</p>
+            </div>
+          `;
+        }
+      })
+      .catch(error => {
+        loadingDiv.style.display = "none";
+        hasilDiv.innerHTML = "<p style='color:red;'>Terjadi kesalahan. Silakan coba lagi.</p>";
+      });
+    }
+  </script>
+
+</body>
+</html>
