@@ -71,7 +71,7 @@
 <body>
 
   <h1>Cek Progress Pesananmu Disini!</h1>
-  <small>Cek WA Admin untuk ID Pesananmu</small>
+  <small>Cek WA Admin untuk ID Pesananmu, pastikan besar kecilnya huruf sesuai</small>
 
   <input type="text" id="idPesanan" placeholder="Masukkan ID Pesanan">
   <button onclick="cekStatus()">Cek Status</button>
@@ -94,7 +94,7 @@
         return;
       }
 
-      var url = "https://script.google.com/macros/s/AKfycbxH_J2ZWhKI6fLEbIsxhvyA8XPt1k_FcdBxipos6nowGR7oRD4XnY9-CiUcxaLcdrsO/exec" + id; // <-- Ganti URL Web App di sini
+      var url = "https://script.google.com/macros/s/AKfycbxH_J2ZWhKI6fLEbIsxhvyA8XPt1k_FcdBxipos6nowGR7oRD4XnY9-CiUcxaLcdrsO/exec?id=" + id; // <-- Ganti URL Web App di sini
 
       fetch(url)
       .then(response => response.json())
